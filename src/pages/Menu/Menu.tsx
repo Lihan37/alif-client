@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 type MenuItem = {
   name: string;
   unit: string;
@@ -162,11 +164,17 @@ const menuSections: MenuSection[] = [
 ];
 
 const Menu = () => {
+  const [activeTab, setActiveTab] = useState<string>('all');
+  const isAllTab = activeTab === 'all';
+  const visibleSections = isAllTab
+    ? menuSections
+    : menuSections.filter((section) => section.title === activeTab);
+
   return (
     <div className="min-h-screen bg-surface-main px-6 py-12 text-text-primary">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 font-bn">
         <header className="rounded-3xl border border-brand-dark/20 bg-white px-8 py-10 shadow-[0_20px_60px_-40px_rgba(0,0,0,0.35)]">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-text-muted">
+          <p className="text-xs font-semibold uppercase tracking-[0.06em] text-text-muted">
             বিসমিল্লাহির রাহমানির রাহিম
           </p>
           <div className="mt-3 flex flex-wrap items-center justify-between gap-4">
@@ -185,27 +193,79 @@ const Menu = () => {
           </p>
         </header>
 
-        <section className="grid gap-6 md:grid-cols-2">
-          {menuSections.map((section) => (
+        <section className="rounded-3xl border border-brand-dark/20 bg-white p-4 shadow-[0_20px_50px_-40px_rgba(0,0,0,0.35)]">
+          <div className="flex gap-2 overflow-x-auto pb-1">
+            <button
+              type="button"
+              onClick={() => setActiveTab('all')}
+              className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition ${
+                activeTab === 'all'
+                  ? 'bg-accent text-text-inverse'
+                  : 'bg-brand-light text-text-primary hover:bg-brand'
+              }`}
+            >
+              All
+            </button>
+            {menuSections.map((section) => (
+              <button
+                key={section.title}
+                type="button"
+                onClick={() => setActiveTab(section.title)}
+                className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition ${
+                  activeTab === section.title
+                    ? 'bg-accent text-text-inverse'
+                    : 'bg-brand-light text-text-primary hover:bg-brand'
+                }`}
+              >
+                {section.title}
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <section className={isAllTab ? 'grid gap-6 md:grid-cols-2' : 'mx-auto w-full max-w-4xl'}>
+          {visibleSections.map((section) => (
             <div
               key={section.title}
-              className="rounded-3xl border border-brand-dark/20 bg-white p-6 shadow-[0_20px_60px_-40px_rgba(0,0,0,0.3)]"
+              className={`rounded-3xl border border-brand-dark/20 bg-white shadow-[0_20px_60px_-40px_rgba(0,0,0,0.3)] ${
+                isAllTab ? 'p-6' : 'p-8 md:p-10'
+              }`}
             >
-              <h2 className="text-xl font-semibold text-accent">{section.title}</h2>
-              <div className="mt-4 space-y-2 text-sm text-text-secondary">
-                <div className="grid grid-cols-[1fr_110px_80px] items-center gap-3 border-b border-brand-dark/20 pb-2 text-xs font-semibold uppercase tracking-[0.2em] text-text-muted">
-                  <span>খাদ্যের নাম</span>
-                  <span className="text-right">পরিমান</span>
-                  <span className="text-right">মূল্য</span>
+              <h2
+                className={`font-bn font-semibold tracking-normal text-accent ${isAllTab ? 'text-xl' : 'text-center text-2xl md:text-3xl'}`}
+              >
+                {section.title}
+              </h2>
+
+              <div className={`mt-4 space-y-2 text-text-secondary ${isAllTab ? 'text-sm' : 'text-base md:text-lg'} `}>
+                <div
+                  className={`grid items-center gap-3 border-b border-brand-dark/20 pb-2 font-semibold uppercase tracking-[0.04em] text-text-muted ${
+                    isAllTab
+                      ? 'grid-cols-[1fr_110px_80px] text-xs'
+                      : 'grid-cols-3 text-sm md:text-base'
+                  }`}
+                >
+                  <span className={isAllTab ? '' : 'text-center'}>Item</span>
+                  <span className={isAllTab ? 'text-right' : 'text-center'}>Unit</span>
+                  <span className={isAllTab ? 'text-right' : 'text-center'}>Price</span>
                 </div>
+
                 {section.items.map((item, index) => (
                   <div
                     key={`${item.name}-${item.price}-${index}`}
-                    className="grid grid-cols-[1fr_110px_80px] items-start gap-3 border-b border-brand-dark/10 py-2 last:border-b-0"
+                    className={`grid items-start gap-3 border-b border-brand-dark/10 py-2 last:border-b-0 ${
+                      isAllTab
+                        ? 'grid-cols-[1fr_110px_80px]'
+                        : 'grid-cols-3 py-3'
+                    }`}
                   >
-                    <span className="text-text-primary">{item.name}</span>
-                    <span className="text-right">{item.unit}</span>
-                    <span className="text-right text-text-primary">{item.price}</span>
+                    <span className={`text-text-primary ${isAllTab ? '' : 'text-center font-medium'}`}>
+                      {item.name}
+                    </span>
+                    <span className={isAllTab ? 'text-right' : 'text-center'}>{item.unit}</span>
+                    <span className={`text-text-primary ${isAllTab ? 'text-right' : 'text-center font-semibold'}`}>
+                      {item.price}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -218,4 +278,6 @@ const Menu = () => {
 };
 
 export default Menu;
+
+
 
