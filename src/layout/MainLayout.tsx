@@ -90,6 +90,9 @@ const MainLayout = () => {
             <NavLink className={navClassName} to="/contact">
               Contact
             </NavLink>
+            <NavLink className={navClassName} to="/our-people">
+              Our People
+            </NavLink>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -172,6 +175,9 @@ const MainLayout = () => {
                 </NavLink>
                 <NavLink className={mobileNavClassName} to="/contact" onClick={closeMobileMenu}>
                   Contact
+                </NavLink>
+                <NavLink className={mobileNavClassName} to="/our-people" onClick={closeMobileMenu}>
+                  Our People
                 </NavLink>
                 {isAdminLoggedIn && (
                   <NavLink className={mobileNavClassName} to="/admin" onClick={closeMobileMenu}>

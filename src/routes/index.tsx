@@ -8,6 +8,7 @@ import Contact from '../pages/Contact/Contact';
 import Events from '../pages/Events/Events';
 import Login from '../pages/Login/Login';
 import Menu from '../pages/Menu/Menu';
+import OurPeople from '../pages/OurPeople/OurPeople';
 import Signup from '../pages/Signup/Signup';
 
 const router = createBrowserRouter([
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: '/contact',
         element: <Contact />,
+      },
+      {
+        path: '/our-people',
+        element: <OurPeople />,
       },
       {
         path: '/alongkar-branch',
