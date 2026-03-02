@@ -237,7 +237,9 @@ const Menu = () => {
                 {section.title}
               </h2>
 
-              <div className={`mt-4 space-y-2 text-text-secondary ${isAllTab ? 'text-sm' : 'text-base md:text-lg'} `}>
+              <div
+                className={`font-bn-clear mt-4 space-y-2 text-text-secondary ${isAllTab ? 'text-sm' : 'text-base md:text-lg'} `}
+              >
                 <div
                   className={`grid items-center gap-3 border-b border-brand-dark/20 pb-2 font-semibold uppercase tracking-[0.04em] text-text-muted ${
                     isAllTab
@@ -259,11 +261,17 @@ const Menu = () => {
                         : 'grid-cols-3 py-3'
                     }`}
                   >
-                    <span className={`text-text-primary ${isAllTab ? '' : 'text-center font-medium'}`}>
+                    <span
+                      className={`text-text-primary ${
+                        isAllTab ? 'text-sm md:text-base' : 'text-center text-base font-medium md:text-lg'
+                      }`}
+                    >
                       {item.name}
                     </span>
-                    <span className={isAllTab ? 'text-right' : 'text-center'}>{item.unit}</span>
-                    <span className={`text-text-primary ${isAllTab ? 'text-right' : 'text-center font-semibold'}`}>
+                    <span className={`${isAllTab ? 'text-right' : 'text-center'} font-medium`}>{item.unit}</span>
+                    <span
+                      className={`text-text-primary ${isAllTab ? 'text-right font-semibold' : 'text-center font-semibold'}`}
+                    >
                       {item.price}
                     </span>
                   </div>

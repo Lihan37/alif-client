@@ -74,7 +74,7 @@ const MainLayout = () => {
       <header className="sticky top-0 z-50 border-b border-brand-dark/20 bg-surface-main/90 backdrop-blur">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
           <Link to="/" className="flex items-center gap-3" onClick={closeMobileMenu}>
-            <img src={NAV_LOGO_URL} alt="Alif logo" className="h-14 w-auto" />
+            <img src={NAV_LOGO_URL} alt="Alif logo" className="h-14 w-auto origin-left scale-[1.35]" />
           </Link>
 
           <nav className="hidden items-center gap-8 text-base font-sans font-semibold tracking-normal text-text-secondary md:flex">
@@ -141,7 +141,7 @@ const MainLayout = () => {
         </div>
 
         {isMobileMenuOpen && (
-          <div className="fixed inset-0 z-[100] bg-black/35 px-5 py-6 md:hidden" onClick={closeMobileMenu}>
+          <div className="fixed inset-0 z-100 bg-black/35 px-5 py-6 md:hidden" onClick={closeMobileMenu}>
             <div
               className="mx-auto mt-16 w-full max-w-sm rounded-2xl border border-brand-dark/20 bg-white p-4 shadow-[0_25px_70px_-35px_rgba(0,0,0,0.65)]"
               onClick={(event) => event.stopPropagation()}
@@ -211,4 +211,3 @@ const MainLayout = () => {
 };
 
 export default MainLayout;
-

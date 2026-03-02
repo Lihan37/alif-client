@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 
 function App() {
   return (
@@ -6,73 +6,55 @@ function App() {
       <div className="absolute -top-40 right-0 h-96 w-96 rounded-full bg-brand-light/70 blur-3xl" />
       <div className="absolute -bottom-32 left-10 h-72 w-72 rounded-full bg-accent/20 blur-3xl" />
 
-      <section className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-12 px-6 pb-20 pt-10 font-bn md:grid-cols-[1.1fr_0.9fr]">
-        <div className="animate-fade-up">
-          <p
-            className="mb-6 text-sm md:text-base font-semibold uppercase tracking-[0.06em] text-text-muted animate-fade-up"
-            style={{ animationDelay: '0.05s' }}
-          >
+      <section className="animate-hero-in relative z-10 mx-auto grid w-full max-w-6xl items-center gap-10 px-4 pb-16 pt-8 font-bn sm:px-6 md:gap-12 md:pb-20 md:pt-10 md:grid-cols-[1.1fr_0.9fr]">
+        <div>
+          <p className="mb-6 text-base font-semibold uppercase tracking-[0.06em] text-text-muted md:text-lg">
             আলিফ রেস্টুরেন্ট · Dewanhat
           </p>
-          <h1
-            className="text-3xl font-bold leading-tight text-text-primary md:text-3xl lg:text-4xl animate-fade-up"
-            style={{ animationDelay: '0.15s' }}
-          >
-            আলিফ রেস্টুরেন্ট - সবসময় খোলা, ক্ষুধা নিয়ে আসুন, সুখ নিয়ে যান।
+          <h1 className="text-4xl font-bold leading-tight text-text-primary md:text-5xl lg:text-6xl">
+            আলিফ রেস্টুরেন্ট
           </h1>
-          <p
-            className="mt-6 max-w-xl text-base text-text-secondary md:text-lg animate-fade-up"
-            style={{ animationDelay: '0.25s' }}
-          >
-            ঠিকানা: ৩ শেখ মুজিব রোড, দেওয়ানহাট মোড়, চট্টগ্রাম, বাংলাদেশ (৪০০০)।
-            সার্ভিস: ডাইন-ইন, টেকওয়ে, রিজার্ভেশন। মূল্যমান: $$।
+          <p className="mt-6 max-w-xl text-base text-text-secondary md:text-xl">
+            <span className="block sm:whitespace-nowrap">
+              ঠিকানা: ৩ শেখ মুজিব রোড, দেওয়ানহাট মোড়, চট্টগ্রাম, বাংলাদেশ (৪০০০)
+            </span>
           </p>
-          <div
-            className="mt-8 flex flex-wrap items-center gap-4 text-sm text-text-secondary animate-fade-up"
-            style={{ animationDelay: '0.35s' }}
-          >
-            <span className="rounded-full bg-brand-light px-4 py-2 text-text-primary">
-              স্ট্যাটাস: Always Open
-            </span>
-            <span className="rounded-full bg-brand-light px-4 py-2 text-text-primary">
-              ফোন: +8801819640974
-            </span>
+          <div className="mt-5 flex max-w-xl flex-wrap items-center gap-2 text-base text-text-secondary">
+            {['ডাইন-ইন', 'টেকওয়ে', 'রিজার্ভেশন', '২৪ ঘণ্টা খোলা'].map((service) => (
+              <span
+                key={service}
+                className="rounded-xl border border-brand-dark/20 bg-brand-light/60 px-3 py-1.5 text-sm font-semibold text-text-primary md:px-5 md:py-2.5 md:text-lg"
+              >
+                {service}
+              </span>
+            ))}
           </div>
-          <div
-            className="mt-10 flex flex-wrap items-center gap-4 animate-fade-up"
-            style={{ animationDelay: '0.45s' }}
-          >
-            <button className="rounded-full bg-accent px-6 py-3 text-sm font-semibold uppercase tracking-[0.04em] text-text-inverse transition hover:bg-accent-hover">
-              টেবিল বুক করুন
-            </button>
+          <div className="mt-8 flex flex-wrap items-center gap-4 md:mt-10">
             <Link
               to="/menu"
-              className="rounded-full border border-accent/40 px-6 py-3 text-sm font-semibold uppercase tracking-[0.04em] text-text-secondary transition hover:border-accent hover:text-accent"
+              className="rounded-full bg-accent px-8 py-3.5 text-base font-semibold uppercase tracking-[0.04em] text-text-inverse shadow-sm transition duration-300 ease-out hover:-translate-y-0.5 hover:bg-accent-hover hover:shadow-md active:scale-[0.98] md:px-10 md:py-4 md:text-lg"
             >
               মেনু দেখুন
             </Link>
           </div>
         </div>
-        <div className="relative animate-float-in" style={{ animationDelay: '0.2s' }}>
-          <div className="rounded-[32px] border border-brand-dark/30 bg-white p-8 shadow-[0_30px_90px_-60px_rgba(0,0,0,0.35)]">
-            <p className="text-xs font-semibold uppercase tracking-[0.05em] text-text-muted">
-              New Branch
-            </p>
-            <h2 className="mt-4 text-2xl font-semibold leading-tight text-text-primary md:text-3xl">
-              Alongkar Branch
+        <div className="relative">
+          <div className="w-full rounded-[28px] border border-brand-dark/30 bg-white p-5 shadow-[0_30px_90px_-60px_rgba(0,0,0,0.35)] sm:rounded-[32px] sm:p-8">
+            <p className="text-sm font-semibold uppercase tracking-[0.05em] text-text-muted md:text-base">আরেক শাখা</p>
+            <h2 className="mt-4 text-3xl font-semibold leading-tight text-text-primary md:text-4xl">
+              অলংকার শাখা
             </h2>
-            <p className="mt-4 text-sm leading-relaxed text-text-secondary">
-              Alongkar branch details, menu highlights, and opening updates are available on a dedicated
-              page.
+            <p className="mt-4 text-base leading-relaxed text-text-secondary md:text-lg">
+              অলংকার শাখার বিস্তারিত, মেনুর বিশেষ আইটেম এবং নতুন আপডেট একটি আলাদা পেজে দেখুন।
             </p>
-            <div className="mt-6 rounded-2xl bg-surface-section px-4 py-4 text-sm text-text-secondary">
-              Opening Hours: 10:00 AM - 11:30 PM
+            <div className="mt-6 rounded-2xl bg-surface-section px-4 py-4 text-base text-text-secondary md:text-lg">
+              ২৪ ঘণ্টা খোলা
             </div>
             <Link
               to="/alongkar-branch"
-              className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-accent px-6 py-3 text-sm font-semibold uppercase tracking-[0.04em] text-text-inverse transition hover:bg-accent-hover"
+              className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-accent px-6 py-3.5 text-base font-semibold uppercase tracking-[0.04em] text-text-inverse shadow-sm transition duration-300 ease-out hover:-translate-y-0.5 hover:bg-accent-hover hover:shadow-md active:scale-[0.98] md:text-lg"
             >
-              Alongkar Branch
+              অলংকার শাখা
             </Link>
           </div>
         </div>
