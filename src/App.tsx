@@ -36,6 +36,16 @@ function App() {
             >
               মেনু দেখুন
             </Link>
+            <a
+              href="https://www.foodpanda.com.bd/restaurant/g54m/alif-restaurant-dewanhut"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-[#e21b70] px-6 py-3 text-sm font-semibold text-white shadow-[0_12px_24px_-14px_rgba(226,27,112,0.8)] transition duration-300 ease-out hover:-translate-y-0.5 hover:bg-[#c81662] hover:shadow-[0_18px_30px_-16px_rgba(226,27,112,0.9)] active:scale-[0.98] md:px-7 md:py-3.5 md:text-base"
+              aria-label="Foodpanda-তে অর্ডার করুন"
+            >
+              <span className="inline-block h-2.5 w-2.5 rounded-full bg-white/90" />
+              Foodpanda-তে অর্ডার করুন
+            </a>
           </div>
         </div>
         <div className="relative">
@@ -73,20 +83,56 @@ function App() {
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             {[
-              { label: 'আসন', value: '68' },
-              { label: 'প্রাইভেট রুম', value: '3' },
-              { label: 'দৈনিক বেক', value: '12' },
-              { label: 'সিজনাল মেনু', value: '4' },
+              {
+                title: 'বাংলা হল',
+                details: ['মোট টেবিল: ২৮', 'মোট চেয়ার: ১১৫'],
+              },
+              {
+                title: 'চাইনিজ মেইন হল',
+                details: ['মোট টেবিল: ১৩', 'চেয়ার: ১০৯', 'সোফা সেট: ৩৬'],
+              },
+              {
+                title: 'চাইনিজ হল (A)',
+                details: ['শুধু বুকিং: ১০০', 'ওয়েটিং ছাড়া'],
+              },
+              {
+                title: 'চাইনিজ পার্টি হল (B)',
+                details: ['শুধু বুকিং: ১২০', 'ওয়েটিং ছাড়া'],
+              },
             ].map((item) => (
               <div
-                key={item.label}
-                className="rounded-2xl border border-brand-dark/20 bg-white p-6 text-center animate-fade-up"
+                key={item.title}
+                className="rounded-2xl border border-brand-dark/20 bg-white p-6 animate-fade-up"
               >
-                <p className="text-3xl font-semibold text-accent">{item.value}</p>
-                <p className="mt-2 text-xs uppercase tracking-[0.06em] text-text-muted">
-                  {item.label}
-                </p>
+                <p className="text-lg font-semibold text-accent md:text-xl">{item.title}</p>
+                <div className="mt-3 space-y-1 text-sm text-text-secondary md:text-base">
+                  {item.details.map((line) => (
+                    <p key={line}>{line}</p>
+                  ))}
+                </div>
               </div>
+            ))}
+          </div>
+        </div>
+        <div className="mx-auto mt-2 w-full max-w-6xl px-6 pb-16">
+          <h3 className="mb-3 text-lg font-semibold text-text-primary md:text-xl">হল ডেকোরেশন গ্যালারি</h3>
+          <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2">
+            {[
+              'https://res.cloudinary.com/duaysox2a/image/upload/v1772526526/WhatsApp_Image_2026-03-03_at_13.16.36_1_jdikrc.jpg',
+              'https://res.cloudinary.com/duaysox2a/image/upload/v1772526526/WhatsApp_Image_2026-03-03_at_13.16.37_nzd95s.jpg',
+              'https://res.cloudinary.com/duaysox2a/image/upload/v1772526526/WhatsApp_Image_2026-03-03_at_13.16.36_fvnswf.jpg',
+            ].map((src, index) => (
+              <figure
+                key={src}
+                className="snap-start shrink-0 overflow-hidden rounded-2xl border border-brand-dark/20 bg-white p-2 shadow-[0_16px_35px_-28px_rgba(0,0,0,0.45)] w-[280px] sm:w-[360px] md:w-[420px]"
+              >
+                <img
+                  src={src}
+                  alt={`Hall decoration ${index + 1}`}
+                  loading="lazy"
+                  className="h-[190px] w-full rounded-xl object-cover sm:h-[230px] md:h-[260px]"
+                />
+              </figure>
             ))}
           </div>
         </div>
@@ -95,17 +141,24 @@ function App() {
       <section id="events" className="mx-auto w-full max-w-6xl px-6 py-16">
         <div className="rounded-[32px] border border-brand-dark/20 bg-white p-10 animate-fade-up">
           <div className="flex flex-wrap items-center justify-between gap-6">
-            <div>
+            <div className="max-w-3xl">
               <p className="text-xs uppercase tracking-[0.06em] text-text-muted">
-                প্রাইভেট ডাইনিং
+                ৬ষ্ঠ প্রতিষ্ঠাবার্ষিকী
               </p>
               <h2 className="mt-4 text-3xl font-semibold md:text-4xl">
-                গল্পের মতো এক সন্ধ্যার আয়োজন করুন।
+                র‍্যাফেল ড্র ও গিফট প্রাইজ সেরিমনি সফলভাবে সম্পন্ন।
               </h2>
+              <p className="mt-3 text-base text-text-secondary md:text-lg">
+                গত ৪ বছর ধরে ধারাবাহিকভাবে আয়োজিত এই অনুষ্ঠানে বিজয়ীদের পুরস্কার এবং
+                অংশগ্রহণকারীদের উপহার প্রদান করা হয়েছে।
+              </p>
             </div>
-            <button className="rounded-full bg-accent px-6 py-3 text-xs uppercase tracking-[0.06em] text-text-inverse transition hover:bg-accent-hover">
-              ইভেন্ট পরিকল্পনা
-            </button>
+            <Link
+              to="/events"
+              className="rounded-full bg-accent px-6 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-text-inverse transition hover:bg-accent-hover md:text-base"
+            >
+              বিস্তারিত দেখুন
+            </Link>
           </div>
         </div>
       </section>

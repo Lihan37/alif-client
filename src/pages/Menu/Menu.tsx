@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 
 type MenuItem = {
   name: string;
@@ -37,6 +37,14 @@ const menuSections: MenuSection[] = [
     ],
   },
   {
+    title: 'আলিফ স্পেশাল মেজবানী',
+    items: [
+      { name: 'মেজবানি প্যাকেজ', unit: 'প্রতি জন', price: '৩৫০/-' },
+      { name: 'মেজবানি মাংস', unit: 'প্রতি হাফ', price: '২৫০/-' },
+      { name: 'মেজবানি চনার ডাল', unit: 'প্রতি হাফ', price: '৯০/-' },
+    ],
+  },
+  {
     title: 'সকালের নাস্তার আইটেম',
     items: [
       { name: 'চিকেন সূপ', unit: 'প্রতি হাফ', price: '১২০/-' },
@@ -48,9 +56,6 @@ const menuSections: MenuSection[] = [
       { name: 'প্লেইন নান', unit: 'প্রতি পিস', price: '১৫/-' },
       { name: 'মুগডাল', unit: 'প্রতি হাফ', price: '৫০/-' },
       { name: 'ভাজি', unit: 'প্রতি হাফ', price: '৫০/-' },
-      { name: 'সমুচা', unit: 'প্রতি পিস', price: '১৫/-' },
-      { name: 'চিকেন সমুচা', unit: 'প্রতি পিস', price: '২৫/-' },
-      { name: 'সিঙ্গারা', unit: 'প্রতি পিস', price: '১৫/-' },
       { name: 'সমুচা', unit: 'প্রতি পিস', price: '১৫/-' },
       { name: 'চিকেন সমুচা', unit: 'প্রতি পিস', price: '২৫/-' },
       { name: 'সিঙ্গারা', unit: 'প্রতি পিস', price: '১৫/-' },
@@ -143,14 +148,6 @@ const menuSections: MenuSection[] = [
     ],
   },
   {
-    title: 'আলিফ স্পেশাল মেজবানী',
-    items: [
-      { name: 'মেজবানি প্যাকেজ', unit: 'প্রতি জন', price: '৩৫০/-' },
-      { name: 'মেজবানি মাংস', unit: 'প্রতি হাফ', price: '২৫০/-' },
-      { name: 'মেজবানি চনার ডাল', unit: 'প্রতি হাফ', price: '৯০/-' },
-    ],
-  },
-  {
     title: 'স্পেশাল মাংস আইটেম',
     items: [
       { name: 'গরু কালা ভুনা', unit: 'প্রতি হাফ', price: '২৫০/-' },
@@ -163,12 +160,35 @@ const menuSections: MenuSection[] = [
   },
 ];
 
+const toEnglishDigits = (value: string) =>
+  value.replace(/[০-৯]/g, (digit) => String('০১২৩৪৫৬৭৮৯'.indexOf(digit)));
+
+const priceToNumber = (price: string) => {
+  const normalized = toEnglishDigits(price).replace(/[^\d]/g, '');
+  return Number.parseInt(normalized || '0', 10);
+};
+
+const normalizedSections: MenuSection[] = menuSections.map((section) => {
+  const uniqueItems = Array.from(
+    new Map(
+      section.items.map((item) => [`${item.name}__${item.unit}__${item.price}`, item] as const),
+    ).values(),
+  );
+
+  const sortedItems = [...uniqueItems].sort((a, b) => priceToNumber(a.price) - priceToNumber(b.price));
+
+  return {
+    ...section,
+    items: sortedItems,
+  };
+});
+
 const Menu = () => {
   const [activeTab, setActiveTab] = useState<string>('all');
   const isAllTab = activeTab === 'all';
   const visibleSections = isAllTab
-    ? menuSections
-    : menuSections.filter((section) => section.title === activeTab);
+    ? normalizedSections
+    : normalizedSections.filter((section) => section.title === activeTab);
 
   return (
     <div className="min-h-screen bg-surface-main px-6 py-12 text-text-primary">
@@ -186,10 +206,7 @@ const Menu = () => {
             </span>
           </div>
           <p className="mt-4 text-sm text-text-secondary">
-            ডেওয়ানহাট, ৩০৭, শেখ মুজিব রোড, চট্টগ্রাম
-          </p>
-          <p className="mt-2 text-sm text-text-secondary">
-            বাংলা হল মেনু স্থিতি ও নির্ধারিত দাম ১৫ নভেম্বর ২০২৪ ইং হতে নির্ধারিত
+            দেওয়ানহাট, ৩০৭, শেখ মুজিব রোড, চট্টগ্রাম
           </p>
         </header>
 
@@ -206,7 +223,7 @@ const Menu = () => {
             >
               All
             </button>
-            {menuSections.map((section) => (
+            {normalizedSections.map((section) => (
               <button
                 key={section.title}
                 type="button"
