@@ -3,11 +3,24 @@
 function App() {
   return (
     <div className="relative overflow-hidden">
-      <div className="absolute -top-40 right-0 h-96 w-96 rounded-full bg-brand-light/70 blur-3xl" />
-      <div className="absolute -bottom-32 left-10 h-72 w-72 rounded-full bg-accent/20 blur-3xl" />
+      <section className="animate-hero-in relative isolate">
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(135deg,rgba(232,224,205,0.55)_0%,rgba(255,251,241,0.82)_45%,rgba(215,194,145,0.35)_100%)]" />
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_1px_1px,rgba(130,112,72,0.14)_1px,transparent_0)] [background-size:22px_22px] opacity-60" />
+        <div className="pointer-events-none absolute -top-24 right-0 hidden -z-10 md:block">
+          <div className="grid origin-top-right rotate-12 grid-cols-4 gap-3">
+            {Array.from({ length: 16 }).map((_, index) => (
+              <span
+                key={`hero-tile-${index}`}
+                className="h-20 w-20 rounded-sm border border-white/50 bg-white/75 shadow-[0_12px_24px_-18px_rgba(20,20,20,0.45)] backdrop-blur-[1px]"
+              />
+            ))}
+          </div>
+        </div>
+        <div className="pointer-events-none absolute -top-40 right-0 -z-10 h-96 w-96 rounded-full bg-brand-light/70 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-32 left-10 -z-10 h-72 w-72 rounded-full bg-brand/20 blur-3xl" />
 
-      <section className="animate-hero-in relative z-10 mx-auto grid w-full max-w-6xl items-center gap-10 px-4 pb-16 pt-8 font-bn sm:px-6 md:gap-12 md:pb-20 md:pt-10 md:grid-cols-[1.1fr_0.9fr]">
-        <div>
+        <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-4 pb-16 pt-8 font-bn sm:px-6 md:gap-12 md:pb-20 md:pt-10 md:grid-cols-[1.1fr_0.9fr]">
+        <div className="relative z-10">
           <p className="mb-6 text-base font-semibold uppercase tracking-[0.06em] text-text-muted md:text-lg">
             আলিফ রেস্টুরেন্ট · Dewanhat
           </p>
@@ -48,7 +61,7 @@ function App() {
             </a>
           </div>
         </div>
-        <div className="relative">
+        <div className="relative z-10">
           <div className="w-full rounded-[28px] border border-brand-dark/30 bg-white p-5 shadow-[0_30px_90px_-60px_rgba(0,0,0,0.35)] sm:rounded-[32px] sm:p-8">
             <p className="text-sm font-semibold uppercase tracking-[0.05em] text-text-muted md:text-base">আরেক শাখা</p>
             <h2 className="mt-4 text-3xl font-semibold leading-tight text-text-primary md:text-4xl">
@@ -68,6 +81,7 @@ function App() {
             </Link>
           </div>
         </div>
+        </div>
       </section>
 
       <section id="about" className="bg-surface-section">
@@ -81,7 +95,7 @@ function App() {
               আমরা তাজা উপকরণ ব্যবহার করি এবং প্রতিটি খাবারে স্বাদ, গন্ধ ও মান ধরে রাখি।
             </p>
           </div>
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="font-bn-clear grid gap-4 md:grid-cols-2">
             {[
               {
                 title: 'বাংলা হল',
