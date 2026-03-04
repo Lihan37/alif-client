@@ -86,12 +86,12 @@ function App() {
 
       <section id="about" className="bg-surface-section">
         <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 py-16 md:grid-cols-[0.9fr_1.1fr]">
-          <div className="rounded-[28px] border border-brand-dark/20 bg-white p-6 animate-fade-up">
-            <p className="text-xs uppercase tracking-[0.06em] text-text-muted">আমাদের গল্প</p>
+          <div className="flex h-full flex-col justify-center rounded-[28px] border border-brand-dark/20 bg-white p-6 animate-fade-up md:p-8">
+            <p className="text-sm uppercase tracking-[0.06em] text-text-muted md:text-base">আমাদের গল্প</p>
             <h2 className="mt-4 text-3xl font-semibold md:text-4xl">
               আগুন, মসলা আর উদারতার মিশেলে তৈরি।
             </h2>
-            <p className="mt-4 text-sm text-text-secondary">
+            <p className="mt-4 text-base text-text-secondary md:text-lg">
               আমরা তাজা উপকরণ ব্যবহার করি এবং প্রতিটি খাবারে স্বাদ, গন্ধ ও মান ধরে রাখি।
             </p>
           </div>
