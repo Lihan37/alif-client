@@ -116,6 +116,9 @@ function App() {
         </div>
         <div className="mx-auto mt-2 w-full max-w-6xl px-6 pb-16">
           <h3 className="mb-3 text-lg font-semibold text-text-primary md:text-xl">হল ডেকোরেশন গ্যালারি</h3>
+          <p className="mb-4 text-sm text-text-secondary md:text-base">
+            আপনার পছন্দ ও বাজেট অনুযায়ী হলের ডেকোরেশন সম্পূর্ণ কাস্টমাইজ করা যাবে।
+          </p>
           <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2">
             {[
               'https://res.cloudinary.com/duaysox2a/image/upload/v1772526526/WhatsApp_Image_2026-03-03_at_13.16.36_1_jdikrc.jpg',

@@ -16,6 +16,29 @@
   },
 ];
 
+const celebrationGalleryImages = [
+  {
+    src: 'https://res.cloudinary.com/duaysox2a/image/upload/v1772617974/WhatsApp_Image_2026-03-03_at_16.09.59_icufim.jpg',
+    alt: 'Prize handover ceremony photo 1',
+    caption: 'Prize Handover Moment',
+  },
+  {
+    src: 'https://res.cloudinary.com/duaysox2a/image/upload/v1772617974/WhatsApp_Image_2026-03-03_at_16.09.58_usqa5r.jpg',
+    alt: 'Prize handover ceremony photo 2',
+    caption: 'Winners with Organizers',
+  },
+  {
+    src: 'https://res.cloudinary.com/duaysox2a/image/upload/v1772617974/WhatsApp_Image_2026-03-03_at_16.09.58_2_v1uru7.jpg',
+    alt: 'Prize handover ceremony photo 3',
+    caption: '1st Prize Handover',
+  },
+  {
+    src: 'https://res.cloudinary.com/duaysox2a/image/upload/v1772617975/WhatsApp_Image_2026-03-03_at_16.09.58_1_p2etvd.jpg',
+    alt: 'Restaurant anniversary event decoration and entrance',
+    caption: 'Anniversary Event Spot',
+  },
+];
+
 const Events = () => {
   return (
     <section className="mx-auto w-full max-w-6xl px-4 py-10 font-bn text-text-primary sm:px-6 md:py-14">
@@ -74,6 +97,29 @@ const Events = () => {
 
       <div className="mt-8">
         <h3 className="text-center text-xl font-semibold text-text-primary md:text-2xl">
+          Anniversary Event Gallery
+        </h3>
+        <p className="mt-2 text-center text-sm text-text-secondary md:text-base">
+          অনুষ্ঠানের মুহূর্তগুলো দেখুন (স্ক্রল করে আরও ছবি দেখুন)
+        </p>
+        <div className="mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2">
+          {celebrationGalleryImages.map((image, index) => (
+            <figure
+              key={image.src}
+              className="animate-fade-up snap-start shrink-0 overflow-hidden rounded-2xl border border-brand-dark/15 bg-white p-2.5 shadow-[0_20px_50px_-45px_rgba(0,0,0,0.45)] w-[280px] sm:w-[420px] md:w-[520px]"
+              style={{ animationDelay: `${0.08 + index * 0.06}s` }}
+            >
+              <img
+                src={image.src}
+                alt={image.alt}
+                loading="lazy"
+                className="h-[220px] w-full rounded-xl object-cover sm:h-[290px] md:h-[340px]"
+              />
+            </figure>
+          ))}
+        </div>
+
+        <h3 className="mt-6 text-center text-xl font-semibold text-text-primary md:text-2xl">
           Gift Prize Ceremony - Winners Announcement
         </h3>
         <figure
