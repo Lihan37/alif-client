@@ -1,9 +1,15 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
+import AlongkarLayout from '../layout/AlongkarLayout';
 import MainLayout from '../layout/MainLayout';
 import About from '../pages/About/About';
 import AdminDashboard from '../pages/Admin/AdminDashboard';
-import AlongkarBranch from '../pages/AlongkarBranch/AlongkarBranch';
+import AlongkarAbout from '../pages/AlongkarBranch/AlongkarAbout';
+import AlongkarContact from '../pages/AlongkarBranch/AlongkarContact';
+import AlongkarEvents from '../pages/AlongkarBranch/AlongkarEvents';
+import AlongkarHome from '../pages/AlongkarBranch/AlongkarHome';
+import AlongkarMenu from '../pages/AlongkarBranch/AlongkarMenu';
+import AlongkarOurPeople from '../pages/AlongkarBranch/AlongkarOurPeople';
 import Contact from '../pages/Contact/Contact';
 import Events from '../pages/Events/Events';
 import Login from '../pages/Login/Login';
@@ -41,10 +47,6 @@ const router = createBrowserRouter([
         element: <OurPeople />,
       },
       {
-        path: '/alongkar-branch',
-        element: <AlongkarBranch />,
-      },
-      {
         path: '/login',
         element: <Login />,
       },
@@ -55,6 +57,36 @@ const router = createBrowserRouter([
       {
         path: '/admin',
         element: <AdminDashboard />,
+      },
+    ],
+  },
+  {
+    path: '/alongkar-branch',
+    element: <AlongkarLayout />,
+    children: [
+      {
+        index: true,
+        element: <AlongkarHome />,
+      },
+      {
+        path: 'menu',
+        element: <AlongkarMenu />,
+      },
+      {
+        path: 'about',
+        element: <AlongkarAbout />,
+      },
+      {
+        path: 'events',
+        element: <AlongkarEvents />,
+      },
+      {
+        path: 'contact',
+        element: <AlongkarContact />,
+      },
+      {
+        path: 'our-people',
+        element: <AlongkarOurPeople />,
       },
     ],
   },
