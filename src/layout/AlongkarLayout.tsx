@@ -127,14 +127,14 @@ const AlongkarLayout = () => {
                 onClick={handleLogout}
                 className="hidden rounded-full bg-accent px-6 py-2.5 text-base font-semibold tracking-normal text-text-inverse transition hover:bg-accent-hover md:inline-flex"
               >
-                Logout
+                লগআউট
               </button>
             ) : (
               <NavLink
                 to="/login"
                 className="hidden rounded-full bg-accent px-6 py-2.5 text-base font-semibold tracking-normal text-text-inverse transition hover:bg-accent-hover md:inline-flex"
               >
-                Login
+                লগইন
               </NavLink>
             )}
           </div>
@@ -185,7 +185,7 @@ const AlongkarLayout = () => {
                 </NavLink>
                 {isAdminLoggedIn && (
                   <NavLink className={mobileNavClassName} to="/admin" onClick={closeMobileMenu}>
-                    Admin
+                    অ্যাডমিন
                   </NavLink>
                 )}
                 {isLoggedIn ? (
@@ -194,11 +194,11 @@ const AlongkarLayout = () => {
                     className={mobileNavClassName({ isActive: false })}
                     onClick={handleLogout}
                   >
-                    Logout
+                    লগআউট
                   </button>
                 ) : (
                   <NavLink className={mobileNavClassName} to="/login" onClick={closeMobileMenu}>
-                    Login
+                    লগইন
                   </NavLink>
                 )}
               </nav>
