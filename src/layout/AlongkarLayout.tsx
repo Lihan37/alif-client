@@ -134,7 +134,7 @@ const AlongkarLayout = () => {
                 to="/login"
                 className="hidden rounded-full bg-accent px-6 py-2.5 text-base font-semibold tracking-normal text-text-inverse transition hover:bg-accent-hover md:inline-flex"
               >
-                লগইন
+                Login
               </NavLink>
             )}
           </div>
@@ -198,7 +198,7 @@ const AlongkarLayout = () => {
                   </button>
                 ) : (
                   <NavLink className={mobileNavClassName} to="/login" onClick={closeMobileMenu}>
-                    লগইন
+                    Login
                   </NavLink>
                 )}
               </nav>

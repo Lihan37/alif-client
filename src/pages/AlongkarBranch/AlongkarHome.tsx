@@ -1,16 +1,5 @@
 import { Link } from 'react-router-dom';
 
-const hallContacts = [
-  {
-    label: 'বাংলা',
-    number: '01878131703',
-  },
-  {
-    label: 'চাইনিজ',
-    number: '01878131704',
-  },
-];
-
 const AlongkarHome = () => {
   return (
     <div className="relative overflow-hidden">
@@ -80,17 +69,8 @@ const AlongkarHome = () => {
               <p className="mt-4 text-base leading-relaxed text-text-secondary md:text-lg">
                 দেওয়ানহাট শাখার বিস্তারিত, মেনুর বিশেষ আইটেম এবং নতুন আপডেট আলাদা পেজে দেখুন।
               </p>
-              <div className="mt-6 space-y-3">
-                {hallContacts.map((contact) => (
-                  <a
-                    key={contact.number}
-                    href={`tel:+88${contact.number}`}
-                    className="flex items-center justify-between rounded-2xl bg-surface-section px-4 py-4 text-base text-text-secondary transition hover:bg-brand-light/40"
-                  >
-                    <span className="font-semibold text-text-primary">{contact.label}</span>
-                    <span className="text-lg font-semibold text-accent">{contact.number}</span>
-                  </a>
-                ))}
+              <div className="mt-6 rounded-2xl bg-surface-section px-4 py-4 text-base text-text-secondary md:text-lg">
+                ২৪ ঘণ্টা খোলা
               </div>
               <Link
                 to="/"
