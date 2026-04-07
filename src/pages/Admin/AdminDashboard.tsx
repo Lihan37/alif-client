@@ -41,6 +41,13 @@ type AddEmployeeFormState = {
   sectionId: string;
 };
 
+const EMPTY_EMPLOYEE_FORM: AddEmployeeFormState = {
+  serial: '',
+  name: '',
+  number: '',
+  sectionId: '',
+};
+
 const getErrorMessage = (error: unknown): string => {
   const fallback = 'Request failed. Please try again.';
   if (typeof error !== 'object' || error === null) {
@@ -62,12 +69,8 @@ const AdminDashboard = () => {
   const [isSavingEmployee, setIsSavingEmployee] = useState(false);
   const [employeeFormMessage, setEmployeeFormMessage] = useState('');
   const [employeeFormError, setEmployeeFormError] = useState('');
-  const [employeeForm, setEmployeeForm] = useState<AddEmployeeFormState>({
-    serial: '',
-    name: '',
-    number: '',
-    sectionId: '',
-  });
+  const [employeeForm, setEmployeeForm] = useState<AddEmployeeFormState>(EMPTY_EMPLOYEE_FORM);
+  const [editingEmployeeId, setEditingEmployeeId] = useState<string | null>(null);
 
   const totalUsers = users.length;
   const totalAdmins = users.filter((user) => user.role === 'admin').length;
@@ -81,6 +84,34 @@ const AdminDashboard = () => {
 
   const mainHallSections = sections.filter((section) => section.hall === 'main_hall');
   const chineseHallSections = sections.filter((section) => section.hall === 'chinese_hall');
+  const isEditMode = editingEmployeeId !== null;
+
+  const resetEmployeeForm = () => {
+    setEmployeeForm(EMPTY_EMPLOYEE_FORM);
+    setEditingEmployeeId(null);
+    setEmployeeFormError('');
+    setEmployeeFormMessage('');
+  };
+
+  const populateEmployeeForm = (employee: AdminEmployee) => {
+    setActiveTab('addEmployees');
+    setEditingEmployeeId(employee._id);
+    setEmployeeForm({
+      serial: employee.serial ? String(employee.serial) : '',
+      name: employee.name,
+      number: employee.number ?? '',
+      sectionId: employee.sectionId,
+    });
+    setEmployeeFormError('');
+    setEmployeeFormMessage('');
+  };
+
+  const loadEmployees = async (token: string) => {
+    const employeesResponse = await api.get<{ employees: AdminEmployee[] }>('/admin/employees', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    setEmployees(employeesResponse.data.employees ?? []);
+  };
 
   useEffect(() => {
     const checkAccess = async () => {
@@ -166,21 +197,21 @@ const AdminDashboard = () => {
         sectionId: employeeForm.sectionId,
       };
 
-      const response = await api.post<{ employee: AdminEmployee }>('/admin/employees', payload, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
+      const response = editingEmployeeId
+        ? await api.put<{ employee: AdminEmployee }>(`/admin/employees/${editingEmployeeId}`, payload, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          })
+        : await api.post<{ employee: AdminEmployee }>('/admin/employees', payload, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          });
 
-      const employeesResponse = await api.get<{ employees: AdminEmployee[] }>('/admin/employees', {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-      setEmployees(employeesResponse.data.employees ?? []);
-      setEmployeeForm({
-        serial: '',
-        name: '',
-        number: '',
-        sectionId: '',
-      });
-      setEmployeeFormMessage(`Employee saved to database: ${response.data.employee.name}`);
+      await loadEmployees(accessToken);
+      resetEmployeeForm();
+      setEmployeeFormMessage(
+        editingEmployeeId
+          ? `Employee updated successfully: ${response.data.employee.name}`
+          : `Employee saved to database: ${response.data.employee.name}`
+      );
     } catch (error: unknown) {
       setEmployeeFormError(getErrorMessage(error));
     } finally {
@@ -356,13 +387,24 @@ const AdminDashboard = () => {
                   </div>
 
                   <div className="flex items-end">
-                    <button
-                      type="submit"
-                      disabled={isSavingEmployee}
-                      className="w-full rounded-full bg-accent px-6 py-2.5 text-base font-semibold text-text-inverse transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-70"
-                    >
-                      {isSavingEmployee ? 'Saving...' : 'Add Employee'}
-                    </button>
+                    <div className="flex w-full flex-col gap-3 sm:flex-row">
+                      <button
+                        type="submit"
+                        disabled={isSavingEmployee}
+                        className="w-full rounded-full bg-accent px-6 py-2.5 text-base font-semibold text-text-inverse transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-70"
+                      >
+                        {isSavingEmployee ? 'Saving...' : isEditMode ? 'Update Employee' : 'Add Employee'}
+                      </button>
+                      {isEditMode && (
+                        <button
+                          type="button"
+                          onClick={resetEmployeeForm}
+                          className="w-full rounded-full border border-brand-dark/20 px-6 py-2.5 text-base font-semibold text-text-secondary transition hover:border-accent hover:text-accent"
+                        >
+                          Cancel
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </form>
 
@@ -385,7 +427,8 @@ const AdminDashboard = () => {
                         <th className="px-4 py-3 font-semibold">Name</th>
                         <th className="px-4 py-3 font-semibold">Phone</th>
                         <th className="px-4 py-3 font-semibold">Section</th>
-                        <th className="rounded-r-xl px-4 py-3 font-semibold">Hall</th>
+                        <th className="px-4 py-3 font-semibold">Hall</th>
+                        <th className="rounded-r-xl px-4 py-3 font-semibold">Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -396,6 +439,15 @@ const AdminDashboard = () => {
                           <td className="px-4 py-3">{employee.number ?? '-'}</td>
                           <td className="px-4 py-3">{employee.sectionLabel}</td>
                           <td className="px-4 py-3">{employee.hall === 'chinese_hall' ? 'Chinese Hall' : 'Main Hall'}</td>
+                          <td className="px-4 py-3">
+                            <button
+                              type="button"
+                              onClick={() => populateEmployeeForm(employee)}
+                              className="rounded-full border border-brand-dark/20 px-4 py-1.5 text-xs font-semibold text-text-secondary transition hover:border-accent hover:text-accent"
+                            >
+                              Edit
+                            </button>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
