@@ -67,6 +67,7 @@ const AdminDashboard = () => {
   const [sections, setSections] = useState<EmployeeSection[]>(FALLBACK_EMPLOYEE_SECTIONS);
   const [activeTab, setActiveTab] = useState<'users' | 'addEmployees'>('users');
   const [isSavingEmployee, setIsSavingEmployee] = useState(false);
+  const [deletingEmployeeId, setDeletingEmployeeId] = useState<string | null>(null);
   const [employeeFormMessage, setEmployeeFormMessage] = useState('');
   const [employeeFormError, setEmployeeFormError] = useState('');
   const [employeeForm, setEmployeeForm] = useState<AddEmployeeFormState>(EMPTY_EMPLOYEE_FORM);
@@ -216,6 +217,39 @@ const AdminDashboard = () => {
       setEmployeeFormError(getErrorMessage(error));
     } finally {
       setIsSavingEmployee(false);
+    }
+  };
+
+  const handleDeleteEmployee = async (employee: AdminEmployee) => {
+    setEmployeeFormError('');
+    setEmployeeFormMessage('');
+
+    if (!accessToken) {
+      setEmployeeFormError('Missing admin token. Please login again.');
+      return;
+    }
+
+    const shouldDelete = window.confirm(`Delete employee "${employee.name}"?`);
+    if (!shouldDelete) {
+      return;
+    }
+
+    setDeletingEmployeeId(employee._id);
+
+    try {
+      await api.delete(`/admin/employees/${employee._id}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+
+      await loadEmployees(accessToken);
+      if (editingEmployeeId === employee._id) {
+        resetEmployeeForm();
+      }
+      setEmployeeFormMessage(`Employee deleted successfully: ${employee.name}`);
+    } catch (error: unknown) {
+      setEmployeeFormError(getErrorMessage(error));
+    } finally {
+      setDeletingEmployeeId(null);
     }
   };
 
@@ -440,13 +474,24 @@ const AdminDashboard = () => {
                           <td className="px-4 py-3">{employee.sectionLabel}</td>
                           <td className="px-4 py-3">{employee.hall === 'chinese_hall' ? 'Chinese Hall' : 'Main Hall'}</td>
                           <td className="px-4 py-3">
-                            <button
-                              type="button"
-                              onClick={() => populateEmployeeForm(employee)}
-                              className="rounded-full border border-brand-dark/20 px-4 py-1.5 text-xs font-semibold text-text-secondary transition hover:border-accent hover:text-accent"
-                            >
-                              Edit
-                            </button>
+                            <div className="flex flex-wrap gap-2">
+                              <button
+                                type="button"
+                                onClick={() => populateEmployeeForm(employee)}
+                                disabled={isSavingEmployee || deletingEmployeeId === employee._id}
+                                className="rounded-full border border-brand-dark/20 px-4 py-1.5 text-xs font-semibold text-text-secondary transition hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-60"
+                              >
+                                Edit
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => void handleDeleteEmployee(employee)}
+                                disabled={isSavingEmployee || deletingEmployeeId !== null}
+                                className="rounded-full border border-red-200 px-4 py-1.5 text-xs font-semibold text-red-600 transition hover:border-red-400 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60"
+                              >
+                                {deletingEmployeeId === employee._id ? 'Deleting...' : 'Delete'}
+                              </button>
+                            </div>
                           </td>
                         </tr>
                       ))}
